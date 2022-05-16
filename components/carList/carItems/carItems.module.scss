@@ -1,0 +1,24 @@
+.Items_Block{
+  border:1px solid black;
+  padding:10px;
+  border-radius: 20px;
+  &__Like__Btn{
+    border: none;
+    background-color: #fff;
+    z-index:1;
+  }
+  span{
+    color:red;
+  }
+  a{
+    text-decoration: none;
+  }
+}
+.Viewed{
+  background-color: rgb(189, 189, 189);
+}
+
+
+
+
+
