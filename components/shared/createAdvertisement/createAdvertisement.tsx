@@ -8,14 +8,12 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import NumberFormat from 'react-number-format';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import { closeModal, addNewCar, saveEditCar } from '../../../store/slices/carSlice';
 import { useAppSelector } from '../../../hooks/hooks';
 import Modal from '../modal/modal';
-import { IParams, OptionType } from './OptionType';
+import { OptionType } from './OptionType';
 import styles from './createAdvertisement.module.scss';
-
-const filter = createFilterOptions<OptionType>();
 
 const brands: readonly OptionType[] = [
   { title: 'BMW' },
@@ -107,27 +105,6 @@ const CreateAdvertisement = () => {
     return option.title;
   };
 
-  const filterOptions = (options: OptionType[], params:IParams) => {
-    // let check;
-    // options.forEach((item) => {
-    //   if (typeof item === 'string') check = true;
-    //   else check = false;
-    // });
-    // if (check) return null;
-    const filtered = filter(options, params);
-
-    const { inputValue } = params;
-
-    const isExisting = options.some((option) => inputValue === option.title);
-    if (inputValue !== '' && !isExisting) {
-      filtered.push({
-        inputValue,
-        title: `Добавить "${inputValue}"`,
-      });
-    }
-
-    return filtered;
-  };
   const saveDataCar = () => {
     const updBrand = (typeof brand === 'string') ? brand : brand.title;
 
@@ -240,15 +217,15 @@ const CreateAdvertisement = () => {
                   setBrand('');
                 }
               }}
-              // @ts-ignore
-              filterOptions={(options, params) => filterOptions(options, params)}
               selectOnFocus
               autoSelect
               id="free-solo-with-text-demo"
               options={brands}
               getOptionLabel={(option) => getOptionLabel(option)}
-               // @ts-ignore
-              renderOption={(props, option) => <li {...props}>{option.title}</li>}
+              renderOption={(props, option) => {
+                if (typeof option !== 'string') return <li {...props}>{option.title}</li>;
+                else return null;
+              }}
               freeSolo
               renderInput={(params) => (
                 <TextField {...params} label="Марка" />
@@ -271,15 +248,15 @@ const CreateAdvertisement = () => {
                   setModel('');
                 }
               }}
-              // @ts-ignore
-              filterOptions={(options, params) => filterOptions(options, params)}
               autoSelect
               selectOnFocus
               id="free-solo-with-text-demo"
               options={models}
               getOptionLabel={(option) => getOptionLabel(option)}
-               // @ts-ignore
-              renderOption={(props, option) => <li {...props}>{option.title}</li>}
+              renderOption={(props, option) => {
+                if (typeof option !== 'string') return <li {...props}>{option.title}</li>;
+                else return null;
+              }}
               freeSolo
               renderInput={(params) => (
                 <TextField {...params} label="Модель" />
