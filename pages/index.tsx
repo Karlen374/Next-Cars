@@ -4,13 +4,13 @@ import MainLayout from '../layouts/MainLayout';
 import CarList from '../components/carList/carList';
 import CarListHeader from '../components/carListHeader/carListHeader';
 import { useAppDispatch } from '../hooks/hooks';
-import { loadLocalStorage } from '../store/slices/carSlice';
+import { getData } from '../store/slices/carSlice';
 
 const Index = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadLocalStorage());
+    dispatch(getData());
   }, []);
 
   return (

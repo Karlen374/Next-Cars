@@ -95,7 +95,7 @@ const CreateAdvertisement = () => {
     } else dispatch(closeModal());
   };
 
-  const getOptionLabel = (option:string | OptionType) => {
+  const getOptionLabel = (option: string | OptionType) => {
     if (typeof option === 'string') {
       return option;
     }
@@ -108,6 +108,12 @@ const CreateAdvertisement = () => {
   };
 
   const filterOptions = (options: OptionType[], params:IParams) => {
+    // let check;
+    // options.forEach((item) => {
+    //   if (typeof item === 'string') check = true;
+    //   else check = false;
+    // });
+    // if (check) return null;
     const filtered = filter(options, params);
 
     const { inputValue } = params;
@@ -234,7 +240,7 @@ const CreateAdvertisement = () => {
                   setBrand('');
                 }
               }}
-               // @ts-ignore
+              // @ts-ignore
               filterOptions={(options, params) => filterOptions(options, params)}
               selectOnFocus
               autoSelect

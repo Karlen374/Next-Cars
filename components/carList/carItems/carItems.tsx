@@ -20,7 +20,6 @@ interface CarItemsProps {
 
 const CarItems = ({ data }:CarItemsProps) => {
   const dispatch = useAppDispatch();
-
   const changeViewedCar = (id:string) => {
     dispatch(changeViewed(id));
   };
@@ -30,7 +29,7 @@ const CarItems = ({ data }:CarItemsProps) => {
     dispatch(openModal());
   };
 
-  const content = data.map((item:ICar) => {
+  const content = data?.map((item:ICar) => {
     const LikeButton = item.liked
       ? <FavoriteIcon sx={{ color: red[900] }} /> : <FavoriteBorderIcon />;
 
