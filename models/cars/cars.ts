@@ -88,6 +88,14 @@ export const $viewedCars = combine($cars, $searchParams, (cars, searchParams) =>
       filteredCars = filteredCars.sort((a, b) => (a.releaseYear - b.releaseYear));
     }
   }
+  if (searchParams.changeArrayInterval[0] !== 0 || searchParams.changeArrayInterval[1] !== 100000) {
+    /* eslint-disable*/
+    filteredCars = filteredCars.filter((item) => {
+      if (searchParams.changeArrayInterval[0] <= item.price && searchParams.changeArrayInterval[1] >= item.price) {
+        return item;
+      }
+    });
+  }
   return filteredCars;
 });
 

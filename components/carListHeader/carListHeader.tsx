@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,10 +11,6 @@ import Grid from '@mui/material/Grid';
 import { red } from '@mui/material/colors';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useStore } from 'effector-react';
-import {
-  changeVisibleByInterval,
-} from '../../store/slices/carSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import styles from './carListHeader.module.scss';
 import {
   $searchParams,
@@ -25,16 +21,9 @@ import {
 } from '../../models/cars/cars';
 
 const CarListHeader = () => {
-  const { filter, LikeButton } = useAppSelector((store) => store.car);
-
-  const dispatch = useAppDispatch();
   const [value, setValue] = useState<number[]>([0, 100000]);
   const minDistance = 1500;
   const searchParams = useStore($searchParams);
-
-  useEffect(() => {
-    if (!LikeButton) setValue([0, 100000]);
-  }, [LikeButton]);
 
   const handleChange = (e: SelectChangeEvent) => {
     changeFilterValue(e.target.value);
@@ -52,7 +41,6 @@ const CarListHeader = () => {
     } else {
       setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
     }
-    changeVisibleArrayInterval(value);
   };
 
   const changeLabelFormat = (newValue: number | number[], activeThumb:number) => {
@@ -97,7 +85,7 @@ const CarListHeader = () => {
         <Grid item sm={6} lg={3} xs={12}>
           {ShowBtn}
         </Grid>
-        {/* <Grid item sm={6} lg={3} xs={12}>
+        <Grid item sm={6} lg={3} xs={12}>
           <Box>
             <Slider
               sx={{ color: '#26395d' }}
@@ -109,11 +97,11 @@ const CarListHeader = () => {
               valueLabelFormat={changeLabelFormat}
               disableSwap
             />
-            <Button variant="outlined" onClick={() => dispatch(changeVisibleByInterval(value))}>
+            <Button variant="outlined" onClick={() => changeVisibleArrayInterval(value)}>
               Показать
             </Button>
           </Box>
-        </Grid> */}
+        </Grid>
         <Grid item sm={6} lg={3} xs={12}>
           <Box sx={{ minWidth: 180 }}>
             <FormControl fullWidth>
