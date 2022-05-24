@@ -1,29 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import { red } from '@mui/material/colors';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useStore } from 'effector-react';
 import styles from './carInfo.module.scss';
-import { changeLiked } from '../../store/slices/carSlice';
-import { ICar } from '../../models/ICar';
+import { ICar } from '../../types/ICar';
 import CarGraph from '../carGraph/carGraph';
+import { $cars, changeLiked } from '../../models/cars/cars';
 
-const CarInfo = () => {
-  const { data } = useAppSelector((store) => store.car);
-  const { query } = useRouter();
-  const dispatch = useAppDispatch();
-
+const CarInfo = ({ id }: any) => {
+  const cars = useStore($cars);
   const [carInfo, setCarInfo] = useState<ICar | null>(null);
 
   const getCarInfoById = () => {
-    setCarInfo(data.filter((item) => item.id === query.id)[0]);
+    setCarInfo(cars.filter((item) => item.id === id)[0]);
   };
 
   useEffect(() => {
     getCarInfoById();
-  }, [carInfo, data]);
+  }, [id]);
 
   const LikeButton = !carInfo?.liked
     ? <FavoriteBorderIcon /> : <FavoriteIcon sx={{ color: red[900] }} />;
@@ -36,7 +32,7 @@ const CarInfo = () => {
 
         <div>
           <IconButton
-            onClick={() => dispatch(changeLiked(carInfo?.id))}
+            onClick={() => (changeLiked(carInfo?.id))}
             aria-label="add to favorites"
           >
             {LikeButton}
@@ -64,8 +60,9 @@ const CarInfo = () => {
         </div>
 
       </div>
-      <CarGraph />
+      <CarGraph data={cars} />
     </>
   );
 };
+
 export default CarInfo;

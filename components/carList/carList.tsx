@@ -1,13 +1,15 @@
 import Grid from '@mui/material/Grid';
+import { useStore } from 'effector-react';
 import Modal from '../shared/modal/modal';
-import { useAppSelector } from '../../hooks/hooks';
 import CreateAdvertisement from '../shared/createAdvertisement/createAdvertisement';
 import CarItems from './carItems/carItems';
 import styles from './carList.module.scss';
+import { $viewedCars } from '../../models/cars/cars';
+import { $modal } from '../../models/modal/modal';
 
 const CarList = () => {
-  const { visibleData, modal } = useAppSelector((store) => store.car);
-
+  const cars = useStore($viewedCars) || [];
+  const modal = useStore($modal);
   return (
     <div>
 
@@ -17,7 +19,7 @@ const CarList = () => {
 
       <div className={styles.Car_List}>
         <Grid container spacing={3}>
-          <CarItems data={visibleData} />
+          <CarItems data={cars} />
         </Grid>
       </div>
 

@@ -1,8 +1,11 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import CarInfo from '../components/carInfo/carInfo';
 import MainLayout from '../layouts/MainLayout';
 
 const carId = () => {
+  const { query } = useRouter();
+
   return (
     <>
       <Head>
@@ -10,7 +13,7 @@ const carId = () => {
         <meta key="store Cars" content="Car Info Page" />
       </Head>
       <MainLayout>
-        <CarInfo />
+        {!!query.id && <CarInfo id={query.id} key={query.id} />}
       </MainLayout>
     </>
 

@@ -1,7 +1,6 @@
 import React, {
   useEffect, forwardRef, useState, ForwardRefExoticComponent, RefAttributes,
 } from 'react';
-import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -9,11 +8,14 @@ import Grid from '@mui/material/Grid';
 import NumberFormat from 'react-number-format';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import Autocomplete from '@mui/material/Autocomplete';
-import { closeModal, addNewCar, saveEditCar } from '../../../store/slices/carSlice';
-import { useAppSelector } from '../../../hooks/hooks';
+import { useStore } from 'effector-react';
 import Modal from '../modal/modal';
 import { OptionType } from './OptionType';
 import styles from './createAdvertisement.module.scss';
+import { addCar, saveEditCar } from '../../../models/cars/cars';
+import { ICar } from '../../../types/ICar';
+import { changeViewedModal } from '../../../models/modal/modal';
+import { $selectedCar } from '../../../models/editCar/editCar';
 
 const brands: readonly OptionType[] = [
   { title: 'BMW' },
@@ -55,8 +57,7 @@ const NumberFormatCustom = forwardRef<ForwardRefExoticComponent<CustomProps & Re
 );
 
 const CreateAdvertisement = () => {
-  const dispatch = useDispatch();
-  const { selectedCar } = useAppSelector((store) => store.car);
+  const selectedCar = useStore($selectedCar);
 
   const [releaseYear, setReleaseYear] = useState<number | string>('');
   const [price, setPrice] = useState<string>('');
@@ -66,7 +67,7 @@ const CreateAdvertisement = () => {
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
 
   useEffect(() => {
-    if (selectedCar.id) {
+    if (selectedCar) {
       setReleaseYear(selectedCar.releaseYear);
       setPrice(String(selectedCar.price));
       setBrand(selectedCar.brand);
@@ -90,7 +91,7 @@ const CreateAdvertisement = () => {
   const closeAddForm = () => {
     if (releaseYear || price || brand || model || description) {
       setConfirmModal(true);
-    } else dispatch(closeModal());
+    } else changeViewedModal();
   };
 
   const getOptionLabel = (option: string | OptionType) => {
@@ -116,22 +117,22 @@ const CreateAdvertisement = () => {
       if (price[i] !== ' ') upPrice += price.slice(i, i + 1);
     }
 
-    const index = selectedCar.id ? selectedCar.id : uuid();
+    const index = selectedCar ? selectedCar.id : uuid();
 
-    const car = {
+    const car: ICar = {
       id: index,
       brand: updBrand,
       model: updModel,
-      price: upPrice,
-      releaseYear,
+      price: +upPrice,
+      releaseYear: +releaseYear,
       description,
       viewed: false,
       liked: false,
     };
 
-    if (!selectedCar.id) dispatch(addNewCar(car));
-    else dispatch(saveEditCar(car));
-    dispatch(closeModal());
+    if (!selectedCar) addCar(car);
+    else saveEditCar(car);
+    changeViewedModal();
   };
 
   const closeModals = () => {
@@ -141,14 +142,14 @@ const CreateAdvertisement = () => {
     setModel('');
     setReleaseYear('');
     setConfirmModal(false);
-    dispatch(closeModal());
+    changeViewedModal();
   };
 
   const saveBtn = (releaseYear && price && Number(price) < 100000 && model && brand && description)
     ? <Button onClick={() => saveDataCar()} variant="outlined" color="success">Сохранить</Button>
     : <Button variant="outlined" disabled>Сохранить</Button>;
 
-  const modalHeader = selectedCar.id
+  const modalHeader = selectedCar
     ? <h2>Редактировать Объявление</h2> : <h2>Разместить Объявление</h2>;
 
   return (

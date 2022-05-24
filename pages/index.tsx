@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
+import { useStore } from 'effector-react';
 import MainLayout from '../layouts/MainLayout';
 import CarList from '../components/carList/carList';
 import CarListHeader from '../components/carListHeader/carListHeader';
-import { useAppDispatch } from '../hooks/hooks';
-import { getData } from '../store/slices/carSlice';
+import { $searchParams, loadCars } from '../models/cars/cars';
 
 const Index = () => {
-  const dispatch = useAppDispatch();
-
+  const searchParams = useStore($searchParams);
   useEffect(() => {
-    dispatch(getData());
-  }, []);
+    loadCars();
+  }, [searchParams.changeFilter]);
 
   return (
     <>

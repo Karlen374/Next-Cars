@@ -1,16 +1,14 @@
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
 import styles from './appHeader.module.scss';
-import { openModal, setSelectedCar } from '../../store/slices/carSlice';
+import { changeViewedModal } from '../../models/modal/modal';
+import { setSelectEditCar } from '../../models/editCar/editCar';
 
 const AppHeader = () => {
-  const dispatch = useDispatch();
-
   const openModalAddForm = () => {
-    dispatch(setSelectedCar());
-    dispatch(openModal());
+    setSelectEditCar();
+    changeViewedModal();
   };
 
   return (

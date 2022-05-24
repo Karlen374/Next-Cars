@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ICar } from '../../models/ICar';
+import { createSlice } from '@reduxjs/toolkit';
+import { ICar } from '../../types/ICar';
 import { getLocalStorage } from '../../hooks/hooks';
 
 interface CarState {
@@ -24,14 +24,6 @@ const initialState:CarState = {
   LikeButton: false,
 };
 
-export const getData = createAsyncThunk(
-  'car/getData',
-  async () => {
-    const response = await JSON.parse(getLocalStorage()?.getItem('data'));
-    return response;
-  },
-);
-
 const CarSlice = createSlice({
   /* eslint-disable no-param-reassign */
   name: 'car',
@@ -55,7 +47,10 @@ const CarSlice = createSlice({
         state.visibleData.sort((a, b) => (a.releaseYear - b.releaseYear));
       }
     },
-
+    getData: (state) => {
+      state.data = JSON.parse(getLocalStorage()?.getItem('data'));
+      state.visibleData = JSON.parse(getLocalStorage()?.getItem('data'));
+    },
     changeSearchValue: (state, action) => {
       state.searchValue = action.payload;
 
@@ -162,19 +157,6 @@ const CarSlice = createSlice({
     },
 
   },
-  extraReducers: (builder) => {
-   builder 
-    .addCase(getData.fulfilled,(state,action)=>{
-      state.data=action.payload;
-      state.visibleData=action.payload;
-    })
-
-    .addCase(getData.rejected,()=>{
-      console.log('error rejected')
-    })
-    
-    .addDefaultCase(() => {})
-  },
   /* eslint-disable no-param-reassign */
 });
 
@@ -186,6 +168,7 @@ export const {
   openModal,
   closeModal,
   changeFilter,
+  getData,
   selectedCarInfo,
   setSelectedCar,
   changeSearchValue,

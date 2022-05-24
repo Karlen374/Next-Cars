@@ -10,28 +10,37 @@ import Slider from '@mui/material/Slider';
 import Grid from '@mui/material/Grid';
 import { red } from '@mui/material/colors';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useStore } from 'effector-react';
 import {
-  changeFilter, changeSearchValue, changeVisibleByInterval, showAll, showLiked,
+  changeVisibleByInterval,
 } from '../../store/slices/carSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import styles from './carListHeader.module.scss';
+import {
+  $searchParams,
+  changeShowByLikedBtn,
+  changeSearchInput,
+  changeFilterValue,
+  changeVisibleArrayInterval,
+} from '../../models/cars/cars';
 
 const CarListHeader = () => {
-  const { filter, searchValue, LikeButton } = useAppSelector((store) => store.car);
+  const { filter, LikeButton } = useAppSelector((store) => store.car);
 
   const dispatch = useAppDispatch();
   const [value, setValue] = useState<number[]>([0, 100000]);
   const minDistance = 1500;
+  const searchParams = useStore($searchParams);
 
   useEffect(() => {
     if (!LikeButton) setValue([0, 100000]);
   }, [LikeButton]);
 
   const handleChange = (e: SelectChangeEvent) => {
-    dispatch(changeFilter(e.target.value));
+    changeFilterValue(e.target.value);
   };
   const SearchChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
-    dispatch(changeSearchValue(e.target.value));
+    changeSearchInput(e.target.value);
   };
 
   const changePrice = (event: Event, newValue: number | number[], activeThumb: number) => {
@@ -43,6 +52,7 @@ const CarListHeader = () => {
     } else {
       setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
     }
+    changeVisibleArrayInterval(value);
   };
 
   const changeLabelFormat = (newValue: number | number[], activeThumb:number) => {
@@ -52,10 +62,10 @@ const CarListHeader = () => {
     return `до ${newValue} $`;
   };
 
-  const ShowBtn = LikeButton ? (
+  const ShowBtn = searchParams.liked ? (
     <Button
       variant="contained"
-      onClick={() => dispatch(showAll())}
+      onClick={() => changeShowByLikedBtn()}
       color="success"
     >
       Показать все
@@ -64,7 +74,7 @@ const CarListHeader = () => {
     <Button
       variant="outlined"
       color="error"
-      onClick={() => dispatch(showLiked())}
+      onClick={() => changeShowByLikedBtn()}
       endIcon={<FavoriteIcon sx={{ color: red[900] }} />}
     >
       Только
@@ -80,14 +90,14 @@ const CarListHeader = () => {
             id="outlined-basic"
             label="Поиск"
             onChange={SearchChange}
-            value={searchValue}
+            value={searchParams.input}
             variant="outlined"
           />
         </Grid>
         <Grid item sm={6} lg={3} xs={12}>
           {ShowBtn}
         </Grid>
-        <Grid item sm={6} lg={3} xs={12}>
+        {/* <Grid item sm={6} lg={3} xs={12}>
           <Box>
             <Slider
               sx={{ color: '#26395d' }}
@@ -103,7 +113,7 @@ const CarListHeader = () => {
               Показать
             </Button>
           </Box>
-        </Grid>
+        </Grid> */}
         <Grid item sm={6} lg={3} xs={12}>
           <Box sx={{ minWidth: 180 }}>
             <FormControl fullWidth>
@@ -111,13 +121,13 @@ const CarListHeader = () => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={filter}
+                value={searchParams.changeFilter}
                 label="Фильтр"
                 onChange={handleChange}
               >
-                <MenuItem value={10}>По Марке</MenuItem>
-                <MenuItem value={20}>По Стоимости</MenuItem>
-                <MenuItem value={30}>По Году Выпуска</MenuItem>
+                <MenuItem value="10">По Марке</MenuItem>
+                <MenuItem value="20">По Стоимости</MenuItem>
+                <MenuItem value="30">По Году Выпуска</MenuItem>
               </Select>
             </FormControl>
           </Box>

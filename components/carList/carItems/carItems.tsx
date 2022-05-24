@@ -7,26 +7,20 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import { red, green } from '@mui/material/colors';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { ICar } from '../../../models/ICar';
-import {
-  selectedCarInfo, openModal, changeLiked, changeViewed,
-} from '../../../store/slices/carSlice';
+import { ICar } from '../../../types/ICar';
 import styles from './carItems.module.scss';
+import { selectEditCar } from '../../../models/editCar/editCar';
+import { changeViewedModal } from '../../../models/modal/modal';
+import { changeLiked, changeViewedCar } from '../../../models/cars/cars';
 
 interface CarItemsProps {
   data:ICar[];
 }
 
 const CarItems = ({ data }:CarItemsProps) => {
-  const dispatch = useAppDispatch();
-  const changeViewedCar = (id:string) => {
-    dispatch(changeViewed(id));
-  };
-
   const editCarInfo = (id:string) => {
-    dispatch(selectedCarInfo(id));
-    dispatch(openModal());
+    selectEditCar(id);
+    changeViewedModal();
   };
 
   const content = data?.map((item:ICar) => {
@@ -65,7 +59,7 @@ const CarItems = ({ data }:CarItemsProps) => {
             </div>
             <IconButton
               className={styles.Items_Block__Like__Btn}
-              onClick={() => dispatch(changeLiked(item.id))}
+              onClick={() => changeLiked(item.id)}
               aria-label="add to favorites"
             >
               {LikeButton}

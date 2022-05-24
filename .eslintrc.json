@@ -42,6 +42,8 @@
          "import/extensions":"off",
          "import/no-unresolved": "off",
          "react/prefer-stateless-function":"off",
-         "no-else-return":"off"
+         "no-else-return":"off",
+         "import/prefer-default-export": "off",
+         "no-param-reassign": 0
     }
 }
