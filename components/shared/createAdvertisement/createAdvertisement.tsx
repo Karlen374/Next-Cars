@@ -59,7 +59,7 @@ const NumberFormatCustom = forwardRef<ForwardRefExoticComponent<CustomProps & Re
 const CreateAdvertisement = () => {
   const selectedCar = useStore($selectedCar);
 
-  const [releaseYear, setReleaseYear] = useState<number | string>('');
+  const [releaseYear, setReleaseYear] = useState<number | string>();
   const [price, setPrice] = useState<string>('');
   const [brand, setBrand] = useState<OptionType | string>('');
   const [model, setModel] = useState<OptionType | string>('');
@@ -149,8 +149,7 @@ const CreateAdvertisement = () => {
     ? <Button onClick={() => saveDataCar()} variant="outlined" color="success">Сохранить</Button>
     : <Button variant="outlined" disabled>Сохранить</Button>;
 
-  const modalHeader = selectedCar
-    ? <h2>Редактировать Объявление</h2> : <h2>Разместить Объявление</h2>;
+  const modalHeader = selectedCar ? <h2>Редактировать Объявление</h2> : <h2>Разместить Объявление</h2>;
 
   return (
     <>
@@ -186,6 +185,7 @@ const CreateAdvertisement = () => {
               onChange={changeReleaseYear}
               label="год выпуска"
               variant="outlined"
+              type="number"
             />
           </Grid>
 
