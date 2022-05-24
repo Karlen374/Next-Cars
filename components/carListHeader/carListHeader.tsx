@@ -21,7 +21,7 @@ import {
 } from '../../models/cars/cars';
 
 const CarListHeader = () => {
-  const [value, setValue] = useState<number[]>([0, 100000]);
+  const [value, setValue] = useState<number[]>([0, 10000]);
   const minDistance = 1500;
   const searchParams = useStore($searchParams);
 
@@ -92,7 +92,7 @@ const CarListHeader = () => {
               value={value}
               onChange={changePrice}
               valueLabelDisplay="on"
-              max={100000}
+              max={10000}
               step={100}
               valueLabelFormat={changeLabelFormat}
               disableSwap

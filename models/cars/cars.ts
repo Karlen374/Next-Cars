@@ -21,7 +21,7 @@ export const $cars = createStore<ICar[]>([])
     return data;
   })
   .on(addCar, (cars, newCar:ICar) => {
-    localStorage.setItem('data', JSON.stringify([...cars, newCar]));
+    getLocalStorage()?.setItem('data', JSON.stringify([...cars, newCar]));
     return [...cars, newCar];
   })
   .on(changeLiked, (cars, id:string) => {
@@ -45,7 +45,7 @@ export const $searchParams = createStore<ISearchParams>({
   input: '',
   liked: false,
   changeFilter: '',
-  changeArrayInterval: [0, 100000],
+  changeArrayInterval: [0, 10000],
 })
   .on(changeSearchInput, (searchParams, searchInput:string) => {
     return { ...searchParams, input: searchInput };
@@ -88,7 +88,7 @@ export const $viewedCars = combine($cars, $searchParams, (cars, searchParams) =>
       filteredCars = filteredCars.sort((a, b) => (a.releaseYear - b.releaseYear));
     }
   }
-  if (searchParams.changeArrayInterval[0] !== 0 || searchParams.changeArrayInterval[1] !== 100000) {
+  if (searchParams.changeArrayInterval[0] !== 0 || searchParams.changeArrayInterval[1] !== 10000) {
     /* eslint-disable*/
     filteredCars = filteredCars.filter((item) => {
       if (searchParams.changeArrayInterval[0] <= item.price && searchParams.changeArrayInterval[1] >= item.price) {
@@ -99,6 +99,3 @@ export const $viewedCars = combine($cars, $searchParams, (cars, searchParams) =>
   return filteredCars;
 });
 
-$viewedCars.watch((state) => {
-  console.log('state=', state);
-});

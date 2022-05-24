@@ -7,16 +7,20 @@ import { useStore } from 'effector-react';
 import styles from './carInfo.module.scss';
 import { ICar } from '../../types/ICar';
 import CarGraph from '../carGraph/carGraph';
-import { $cars, changeLiked } from '../../models/cars/cars';
+import { $cars, changeLiked, loadCars } from '../../models/cars/cars';
 
 const CarInfo = ({ id }: any) => {
   const cars = useStore($cars);
-  const [carInfo, setCarInfo] = useState<ICar | null>(null);
 
+  const [carInfo, setCarInfo] = useState<ICar | null>(null);
+  console.log('cars=', cars);
+  console.log('id=', id);
   const getCarInfoById = () => {
     setCarInfo(cars.filter((item) => item.id === id)[0]);
   };
-
+  useEffect(() => {
+    loadCars();
+  }, [carInfo]);
   useEffect(() => {
     getCarInfoById();
   }, [id]);
