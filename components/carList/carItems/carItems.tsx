@@ -35,7 +35,7 @@ const CarItems = ({ data }:CarItemsProps) => {
         timeout={1000}
         classNames="item"
       >
-        <Grid item md={4} sm={6} lg={3} xs={12}>
+        <Grid item md={4} sm={6} lg={4} xs={12}>
 
           <div className={ItemStyle}>
             <div>
@@ -74,11 +74,11 @@ const CarItems = ({ data }:CarItemsProps) => {
                 Подробнее
               </Button>
             </Link>
-
             <Button
               variant="outlined"
               color="success"
               size="small"
+              className={styles.Items_Block__Edit__Btn}
               onClick={() => editCarInfo(item.id)}
               endIcon={<EditIcon sx={{ color: green[700] }} />}
             >

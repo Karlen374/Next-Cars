@@ -4,8 +4,10 @@
   border-radius: 20px;
   &__Like__Btn{
     border: none;
-    background-color: #fff;
     z-index:1;
+  }
+  &__Edit__Btn{
+    margin-left:10px;
   }
   span{
     color:red;
@@ -15,7 +17,7 @@
   }
 }
 .Viewed{
-  background-color: rgb(189, 189, 189);
+  background-color: rgb(155, 148, 148);
 }
 
 
