@@ -7,7 +7,7 @@ import { useStore } from 'effector-react';
 import styles from './carInfo.module.scss';
 import { ICar } from '../../types/ICar';
 import CarGraph from '../carGraph/carGraph';
-import { $cars, changeLiked, loadCars } from '../../models/cars/cars';
+import { $cars, changeLiked } from '../../models/cars/cars';
 
 const CarInfo = ({ id }: any) => {
   const cars = useStore($cars);
@@ -18,9 +18,6 @@ const CarInfo = ({ id }: any) => {
   const getCarInfoById = () => {
     setCarInfo(cars.filter((item) => item.id === id)[0]);
   };
-  useEffect(() => {
-    loadCars();
-  }, [carInfo]);
   useEffect(() => {
     getCarInfoById();
   }, [id]);
