@@ -1,6 +1,5 @@
 import React from 'react';
-// eslint-disable-next-line
-import AppHeader from '../components/appHeader/appHeader'
+import AppHeader from '../components/appHeader/appHeader';
 
 interface MainLayoutProps {
   children: React.ReactNode

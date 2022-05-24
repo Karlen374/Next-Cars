@@ -4,7 +4,7 @@ import Modal from '../shared/modal/modal';
 import CreateAdvertisement from '../shared/createAdvertisement/createAdvertisement';
 import CarItems from './carItems/carItems';
 import styles from './carList.module.scss';
-import { $viewedCars } from '../../models/cars/cars';
+import { $viewedCars } from '../../models/viewedCars/viewedCars';
 import { $modal } from '../../models/modal/modal';
 
 const CarList = () => {

@@ -18,7 +18,7 @@ import {
   changeSearchInput,
   changeFilterValue,
   changeVisibleArrayInterval,
-} from '../../models/cars/cars';
+} from '../../models/searchParams/searchParams';
 
 const CarListHeader = () => {
   const [value, setValue] = useState<number[]>([0, 10000]);
@@ -41,6 +41,7 @@ const CarListHeader = () => {
     } else {
       setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
     }
+    changeVisibleArrayInterval(value);
   };
 
   const changeLabelFormat = (newValue: number | number[], activeThumb:number) => {
@@ -97,9 +98,6 @@ const CarListHeader = () => {
               valueLabelFormat={changeLabelFormat}
               disableSwap
             />
-            <Button variant="outlined" onClick={() => changeVisibleArrayInterval(value)}>
-              Показать
-            </Button>
           </Box>
         </Grid>
         <Grid item sm={6} lg={3} xs={12}>

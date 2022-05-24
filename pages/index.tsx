@@ -4,7 +4,8 @@ import { useStore } from 'effector-react';
 import MainLayout from '../layouts/MainLayout';
 import CarList from '../components/carList/carList';
 import CarListHeader from '../components/carListHeader/carListHeader';
-import { $searchParams, loadCars } from '../models/cars/cars';
+import { loadCars } from '../models/cars/cars';
+import { $searchParams } from '../models/searchParams/searchParams';
 
 const Index = () => {
   const searchParams = useStore($searchParams);

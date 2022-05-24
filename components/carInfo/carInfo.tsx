@@ -12,15 +12,13 @@ import { $cars, changeLiked } from '../../models/cars/cars';
 const CarInfo = ({ id }: any) => {
   const cars = useStore($cars);
 
-  const [carInfo, setCarInfo] = useState<ICar | null>(null);
-  console.log('cars=', cars);
-  console.log('id=', id);
+  const [carInfo, setCarInfo] = useState<ICar>();
   const getCarInfoById = () => {
     setCarInfo(cars.filter((item) => item.id === id)[0]);
   };
   useEffect(() => {
     getCarInfoById();
-  }, [id]);
+  }, [cars]);
 
   const LikeButton = !carInfo?.liked
     ? <FavoriteBorderIcon /> : <FavoriteIcon sx={{ color: red[900] }} />;

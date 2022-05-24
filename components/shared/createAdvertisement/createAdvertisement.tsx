@@ -145,7 +145,7 @@ const CreateAdvertisement = () => {
     changeViewedModal();
   };
 
-  const saveBtn = (releaseYear && price && Number(price) < 100000 && model && brand && description)
+  const saveBtn = (releaseYear && price && Number(price) < 10000 && model && brand && description)
     ? <Button onClick={() => saveDataCar()} variant="outlined" color="success">Сохранить</Button>
     : <Button variant="outlined" disabled>Сохранить</Button>;
 
@@ -191,7 +191,7 @@ const CreateAdvertisement = () => {
 
           <Grid item lg={6} md={6} sm={6} xs={12}>
             <TextField
-              label="цена:(Макс:100000$)"
+              label="цена:(Макс:10000$)"
               value={price}
               onChange={changePrice}
               id="outlined-basic"
