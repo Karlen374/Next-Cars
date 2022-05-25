@@ -51,7 +51,7 @@ const CarListHeader = () => {
     return `до ${newValue} $`;
   };
 
-  const ShowBtn = searchParams.liked ? (
+  const showButton = searchParams.liked ? (
     <Button
       variant="contained"
       onClick={() => changeShowByLikedBtn()}
@@ -84,7 +84,7 @@ const CarListHeader = () => {
           />
         </Grid>
         <Grid item sm={6} lg={3} xs={12}>
-          {ShowBtn}
+          {showButton}
         </Grid>
         <Grid item sm={6} lg={3} xs={12}>
           <Box>

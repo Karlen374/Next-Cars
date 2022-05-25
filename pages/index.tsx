@@ -9,6 +9,7 @@ import { $searchParams } from '../models/searchParams/searchParams';
 
 const Index = () => {
   const searchParams = useStore($searchParams);
+
   useEffect(() => {
     loadCars();
   }, [searchParams.changeFilter]);

@@ -20,7 +20,7 @@ const CarInfo = ({ id }: any) => {
     getCarInfoById();
   }, [cars]);
 
-  const LikeButton = !carInfo?.liked
+  const likeButton = !carInfo?.liked
     ? <FavoriteBorderIcon /> : <FavoriteIcon sx={{ color: red[900] }} />;
 
   return (
@@ -34,7 +34,7 @@ const CarInfo = ({ id }: any) => {
             onClick={() => (changeLiked(carInfo?.id))}
             aria-label="add to favorites"
           >
-            {LikeButton}
+            {likeButton}
           </IconButton>
           <div>
             Марка-

@@ -8,10 +8,11 @@ import { ICar } from '../../types/ICar';
 interface CarGraphProps {
   data:ICar[];
 }
+
 const CarGraph = ({ data }:CarGraphProps) => {
   const [graphData, setGraphData] = useState([]);
 
-  useEffect(() => {
+  const countChartParams = () => {
     let count1 = 0;
     let count2 = 0;
     let count3 = 0;
@@ -52,6 +53,10 @@ const CarGraph = ({ data }:CarGraphProps) => {
       { name: '6000$-8000$', 'количество машин': count4, 'количество понравившихся машин': liked4 },
       { name: '8000$-10000$', 'количество машин': count5, 'количество понравившихся машин': liked5 },
     ]);
+  };
+
+  useEffect(() => {
+    countChartParams();
   }, [data]);
 
   return (

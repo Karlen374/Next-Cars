@@ -145,7 +145,7 @@ const CreateAdvertisement = () => {
     changeViewedModal();
   };
 
-  const saveBtn = (releaseYear && price && Number(price) < 10000 && model && brand && description)
+  const saveButton = (releaseYear && price && Number(price) < 10000 && model && brand && description)
     ? <Button onClick={() => saveDataCar()} variant="outlined" color="success">Сохранить</Button>
     : <Button variant="outlined" disabled>Сохранить</Button>;
 
@@ -279,7 +279,7 @@ const CreateAdvertisement = () => {
         </div>
 
         <div className={styles.Add_Form__Button}>
-          {saveBtn}
+          {saveButton}
           <Button onClick={() => closeAddForm()} variant="outlined" color="error">Отменить</Button>
         </div>
 

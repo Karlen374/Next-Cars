@@ -8,8 +8,8 @@ const Modal = ({ active, children }:ModalProps) => {
     changeViewedModal();
   };
 
-  const ModalClass = active ? `${styles.Modal} ${styles.active__Modal}` : `${styles.Modal}`;
-  const ModalContentClass = active ? `${styles.Modal__content} ${styles.active__Modal}` : `${styles.Modal__content}`;
+  const modalClass = active ? `${styles.Modal} ${styles.active__Modal}` : `${styles.Modal}`;
+  const modalContentClass = active ? `${styles.Modal__content} ${styles.active__Modal}` : `${styles.Modal__content}`;
   return (
     <CSSTransition
       in={active}
@@ -17,8 +17,8 @@ const Modal = ({ active, children }:ModalProps) => {
       classNames="alert"
       unmountOnExit
     >
-      <div className={ModalClass} onClick={close} aria-hidden="true">
-        <div className={ModalContentClass} onClick={(e) => e.stopPropagation()} aria-hidden="true">
+      <div className={modalClass} onClick={close} aria-hidden="true">
+        <div className={modalContentClass} onClick={(e) => e.stopPropagation()} aria-hidden="true">
           {children}
         </div>
       </div>

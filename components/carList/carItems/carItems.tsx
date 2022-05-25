@@ -24,7 +24,7 @@ const CarItems = ({ data }:CarItemsProps) => {
   };
 
   const content = data?.map((item:ICar) => {
-    const LikeButton = item.liked
+    const likeButton = item.liked
       ? <FavoriteIcon sx={{ color: red[900] }} /> : <FavoriteBorderIcon />;
 
     const ItemStyle = item.viewed ? `${styles.Items_Block} ${styles.Viewed}` : `${styles.Items_Block}`;
@@ -62,7 +62,7 @@ const CarItems = ({ data }:CarItemsProps) => {
               onClick={() => changeLiked(item.id)}
               aria-label="add to favorites"
             >
-              {LikeButton}
+              {likeButton}
             </IconButton>
             <Link href={`/${item.id}`}>
               <Button
