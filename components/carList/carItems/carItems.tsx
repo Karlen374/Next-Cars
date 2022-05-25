@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import { red, green } from '@mui/material/colors';
+import clsx from 'clsx';
 import { ICar } from '../../../types/ICar';
 import styles from './carItems.module.scss';
 import { selectEditCar } from '../../../models/editCar/editCar';
@@ -27,7 +28,10 @@ const CarItems = ({ data }:CarItemsProps) => {
     const likeButton = item.liked
       ? <FavoriteIcon sx={{ color: red[900] }} /> : <FavoriteBorderIcon />;
 
-    const ItemStyle = item.viewed ? `${styles.Items_Block} ${styles.Viewed}` : `${styles.Items_Block}`;
+    const itemStyle = clsx({
+      [styles.Items_Block]: true,
+      [styles.Viewed]: item.viewed,
+    });
 
     return (
       <CSSTransition
@@ -37,7 +41,7 @@ const CarItems = ({ data }:CarItemsProps) => {
       >
         <Grid item md={4} sm={6} lg={4} xs={12}>
 
-          <div className={ItemStyle}>
+          <div className={itemStyle}>
             <div>
               Марка -
               {item.brand}

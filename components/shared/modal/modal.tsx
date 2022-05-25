@@ -1,4 +1,5 @@
 import { CSSTransition } from 'react-transition-group';
+import clsx from 'clsx';
 import { ModalProps } from './modal.interface';
 import styles from './modal.module.scss';
 import { changeViewedModal } from '../../../models/modal/modal';
@@ -8,8 +9,15 @@ const Modal = ({ active, children }:ModalProps) => {
     changeViewedModal();
   };
 
-  const modalClass = active ? `${styles.Modal} ${styles.active__Modal}` : `${styles.Modal}`;
-  const modalContentClass = active ? `${styles.Modal__content} ${styles.active__Modal}` : `${styles.Modal__content}`;
+  const modalClass = clsx({
+    [styles.Modal]: true,
+    [styles.active__Modal]: active,
+  });
+  const modalContentClass = clsx({
+    [styles.Modal__content]: true,
+    [styles.active__Modal]: active,
+  });
+
   return (
     <CSSTransition
       in={active}
